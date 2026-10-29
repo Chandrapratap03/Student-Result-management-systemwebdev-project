@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Management System</title>
+    <meta name="description" content="Manage student results, grades, and analytics efficiently.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="ph ph-graduation-cap"></i>
+                <h1>Student Result Management System</h1>
+            </div>
+        </header>
+
+        <main>
+            <!-- Dashboard Statistics -->
+            <section class="dashboard-stats fade-in">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="ph ph-users"></i></div>
+                    <div class="stat-content">
+                        <h3>Total Students</h3>
+                        <p id="stat-total">0</p>
+                    </div>
+                </div>
+                <div class="stat-card pass">
+                    <div class="stat-icon"><i class="ph ph-check-circle"></i></div>
+                    <div class="stat-content">
+                        <h3>Passed</h3>
+                        <p id="stat-passed">0</p>
+                    </div>
+                </div>
+                <div class="stat-card fail">
+                    <div class="stat-icon"><i class="ph ph-x-circle"></i></div>
+                    <div class="stat-content">
+                        <h3>Failed</h3>
+                        <p id="stat-failed">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="ph ph-chart-line-up"></i></div>
+                    <div class="stat-content">
+                        <h3>Avg Percentage</h3>
+                        <p id="stat-avg">0%</p>
+                    </div>
+                </div>
+                <div class="stat-card top-performer">
+                    <div class="stat-icon"><i class="ph ph-trophy"></i></div>
+                    <div class="stat-content">
+                        <h3>Top Performer</h3>
+                        <p id="stat-top">-</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="main-content-grid">
+                <!-- Registration Form -->
+                <section class="form-section card slide-up">
+                    <h2><i class="ph ph-user-plus"></i> Add Student Result</h2>
+                    <form id="student-form">
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="studentName">Student Name</label>
+                                <input type="text" id="studentName" required placeholder="e.g. John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="rollNumber">Roll Number</label>
+                                <input type="text" id="rollNumber" required placeholder="e.g. CS101">
+                            </div>
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="course">Course</label>
+                                <select id="course" required>
+                                    <option value="" disabled selected>Select Course</option>
+                                    <option value="B.Tech CS">B.Tech CS</option>
+                                    <option value="BCA">BCA</option>
+                                    <option value="MCA">MCA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="semester">Semester</label>
+                                <select id="semester" required>
+                                    <option value="" disabled selected>Select Semester</option>
+                                    <option value="1">1st</option>
+                                    <option value="2">2nd</option>
+                                    <option value="3">3rd</option>
+                                    <option value="4">4th</option>
+                                    <option value="5">5th</option>
+                                    <option value="6">6th</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3><i class="ph ph-exam"></i> Enter Marks</h3>
+                        <div class="table-responsive">
+                            <table class="marks-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Max Marks</th>
+                                        <th>Obtained Marks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Web Programming</td>
+                                        <td>100</td>
+                                        <td><input type="number" class="subject-mark" data-subject="Web Programming"
+                                                min="0" max="100" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>DBMS</td>
+                                        <td>100</td>
+                                        <td><input type="number" class="subject-mark" data-subject="DBMS" min="0"
+                                                max="100" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Computer Networks</td>
+                                        <td>100</td>
+                                        <td><input type="number" class="subject-mark" data-subject="Computer Networks"
+                                                min="0" max="100" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Operating Systems</td>
+                                        <td>100</td>
+                                        <td><input type="number" class="subject-mark" data-subject="Operating Systems"
+                                                min="0" max="100" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Python</td>
+                                        <td>100</td>
+                                        <td><input type="number" class="subject-mark" data-subject="Python" min="0"
+                                                max="100" required></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="form-error" class="error-message"></div>
+                        <div class="form-actions">
+                            <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
+                            <button type="submit" id="calculate-btn" class="btn btn-primary">Calculate & Save</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Results Table -->
+                <section class="results-section card slide-up" style="animation-delay: 0.1s;">
+                    <div class="results-header">
+                        <h2><i class="ph ph-list-numbers"></i> Student Records</h2>
+                        <div class="search-box">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <input type="text" id="search-input" placeholder="Search by name or roll no...">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="records-table">
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Student</th>
+                                    <th>Total</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                    <th>Result</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="records-body">
+                                <!-- Dynamically populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="no-records-msg" class="empty-state hidden">
+                        <i class="ph ph-folder-open"></i>
+                        <p>No records found.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- View Modal -->
+    <div id="view-modal" class="modal hidden">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h2>Student Result Details</h2>
+                <button id="close-modal" class="btn-icon"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
